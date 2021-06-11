@@ -1,3 +1,4 @@
+[TOC]
 
 ## SkyNet网络结构
 
@@ -15,7 +16,7 @@
 
 所包含的信息
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608164012945.png" alt="image-20210608164012945" style="zoom:50%;" />
+<img src="pics/image-20210608164012945.png" alt="image-20210608164012945" style="zoom:50%;" />
 
 
 
@@ -215,25 +216,25 @@ weight : 权重
 
 biasm : 量化过程中所需用到的缩放因子
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608164437329.png" alt="image-20210608164437329" style="zoom:50%;" />
+<img src="pics/image-20210608164437329.png" alt="image-20210608164437329" style="zoom:50%;" />
 
 从文件中载入网络参数
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608164957065.png" alt="image-20210608164957065" style="zoom:50%;" />
+<img src="pics/image-20210608164957065.png" alt="image-20210608164957065" style="zoom:50%;" />
 
 inference 过程
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608165355230.png" alt="image-20210608165355230" style="zoom:50%;" />
+<img src="pics/image-20210608165355230.png" alt="image-20210608165355230" style="zoom:50%;" />
 
 与各个层的 golden_results(事先存储在二进制文件中) 对比
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608170003079.png" alt="image-20210608170003079" style="zoom:50%;" />
+<img src="pics/image-20210608170003079.png" alt="image-20210608170003079" style="zoom:50%;" />
 
 ## SkyNet IP核
 
 ### 接口部分
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608170229631.png" alt="image-20210608170229631" style="zoom:50%;" />
+<img src="pics/image-20210608170229631.png" alt="image-20210608170229631" style="zoom:50%;" />
 
 相关知识参考
 
@@ -245,11 +246,11 @@ ug902
 
 什么是 Interface Synthesis
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608171039021.png" alt="image-20210608171039021" style="zoom:50%;" />
+<img src="pics/image-20210608171039021.png" alt="image-20210608171039021" style="zoom:50%;" />
 
 一般包含哪些类别的接口
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608171126285.png" alt="image-20210608171126285" style="zoom:50%;" />
+<img src="pics/image-20210608171126285.png" alt="image-20210608171126285" style="zoom:50%;" />
 
 其中，
 
@@ -259,17 +260,17 @@ Port-Level 级别的接口用来与别的模块传输数据，如从 DDR 中加�
 
 另外，在 SkyNet 中由于函数的 return 被 s_axilite 形式包装，所有的 block level 接口都以 AXI4-Lite 的形式实现，方便 Zynq 上 arm 核对该 IP 的控制
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608171900696.png" alt="image-20210608171900696" style="zoom:50%;" />
+<img src="pics/image-20210608171900696.png" alt="image-20210608171900696" style="zoom:50%;" />
 
 其他接口类型均为 AXI4 master 类型，可将多个函数接口部署到一个 AXI4 接口上
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608172233679.png" alt="image-20210608172233679" style="zoom:50%;" />
+<img src="pics/image-20210608172233679.png" alt="image-20210608172233679" style="zoom:50%;" />
 
 depth
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608172449174.png" alt="image-20210608172449174" style="zoom:50%;" />
+<img src="pics/image-20210608172449174.png" alt="image-20210608172449174" style="zoom:50%;" />
 
-<img src="/Users/heyiqian/宽广/PYNQ/SkrNet/pics/image-20210608172549639.png" alt="image-20210608172549639" style="zoom:50%;" />
+<img src="pics/image-20210608172549639.png" alt="image-20210608172549639" style="zoom:50%;" />
 
 offset
 
