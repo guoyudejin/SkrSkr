@@ -156,21 +156,21 @@ with recorder.record(0.05):
             
         acc_start = time.time()
         
-        SkyNet.write(0x00, 1)
-        if (0 <= idx < IMAGE_NAMES_LEN - 1):
+        SkyNet.write(0x00, 1)#skynet 0~f-1
+        if (0 <= idx < IMAGE_NAMES_LEN - 1):#preprocess 0~f-2
         # pass
             image_buff = stitch(IMAGE_BUFF[idx+1], image)
-        if (0 < idx <= IMAGE_NAMES_LEN - 1):
+        if (0 < idx <= IMAGE_NAMES_LEN - 1):#compute boxes 1~f-1
             compute_bounding_box(bbox ,bbox_origin.reshape(4,16), batch_buff, result)
 
-        isready = SkyNet.read(0x00)
+        isready = SkyNet.read(0x00)#wait for inference process to complete
         while( isready == 1 ):
             isready = SkyNet.read(0x00)
 
-        np.copyto(bbox_origin, biasm[428*16:])
+        np.copyto(bbox_origin, biasm[428*16:])#results from SkyNet IP
         batch_buff = batch
 
-        if (idx == IMAGE_NAMES_LEN - 1):
+        if (idx == IMAGE_NAMES_LEN - 1):#compute boxes for the last one
             compute_bounding_box(bbox ,bbox_origin.reshape(4,16), batch, result)
 
         acc_end = time.time()

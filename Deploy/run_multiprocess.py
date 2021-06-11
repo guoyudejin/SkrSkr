@@ -69,7 +69,7 @@ def compute_bounding_box(batches, result_queue, output_queue):
             print(batch[0]+b, batch[1][b], [x1, x2, y1, y2])
             result_queue.append([batch[0]+b, [x1, x2, y1, y2]])
 
-def resort_result(result_queue):
+def resort_result(result_queue):#reorder results by indexes
     result = []
     for i in range(len(result_queue)):
         result.append(result_queue[i])
@@ -93,15 +93,15 @@ def get_image_batch():
 
 def stitch(batches, image_queue, pid, num_process):
     for i in range(len(batches)):
-        while image_queue.full():
+        while image_queue.full():#队列满时需要等待
                 continue
-        if (i%num_process == pid):
+        if (i%num_process == pid):#把预处理任务平均分给两个进程
             image   = np.zeros((4,160,320,4),np.uint8)
             image[0] = np.array(Image.open(IMG_DIR+batch[0]).convert('RGBA').resize((320, 160)))
             image[1] = np.array(Image.open(IMG_DIR+batch[1]).convert('RGBA').resize((320, 160)))
             image[2] = np.array(Image.open(IMG_DIR+batch[2]).convert('RGBA').resize((320, 160)))
             image[3] = np.array(Image.open(IMG_DIR+batch[3]).convert('RGBA').resize((320, 160)))
-            image_queue.put((image_, batches[i]))
+            image_queue.put((image_, batches[i]))#imgae_ -> image
                 
         else:
             continue
@@ -136,7 +136,7 @@ batches = get_image_batch()
 
 image_queue = Queue(1000)
 output_queue = Queue(200)
-result_queue = Manager().list()
+result_queue = Manager().list()#服务进程管理器 支持 list() 类型 数据可以在不同进程间共享
 num_p = 2
 p1 = Process(target=stitch, args=(batches, image_queue, 0, num_p))
 p2 = Process(target=stitch, args=(batches, image_queue, 1, num_p))
@@ -144,7 +144,7 @@ p3 = Process(target=compute_bounding_box, args=(batches, result_queue, output_qu
 
 print("Start...")
 start = time.time()
-p1.start()
+p1.start()#开启进程
 p2.start()
 p3.start()
 with recorder.record(0.05):
@@ -162,13 +162,13 @@ with recorder.record(0.05):
 
         np.copyto(bbox, biasm[428*16:])
         output_queue.put([bbox.reshape(4,16), img_[1]])
-p1.join()
+p1.join()#等到进程结束后再往后运行
 p2.join()
 p3.join()
 
 end = time.time()
 total_time = end - start
-total_energy = recorder.frame["power1_power"].mean()*total_time
+total_energy = recorder.frame["power1_power"].mean()*total_time#功率x时间=功耗
 
 print("Detection finished\n")
 print('Total time: ' + str(total_time) + ' s')
